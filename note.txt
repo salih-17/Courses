@@ -1,0 +1,6 @@
+# Group by user_id and variant
+subscribers = marketing[marketing['marketing_channel'] == 'Email']
+
+subscribers = subscribers.groupby(['date_served','variant']).agg({'user_id':'nunique','converted':'sum'}).unstack(level=1)
+print (subscribers.head(2))
+subscribers[('converted' , 'control')].sum() / subscribers[('user_id' , 'control')].sum()  
